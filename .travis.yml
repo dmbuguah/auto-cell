@@ -1,3 +1,25 @@
+sudo: required
+
+services:
+  - docker
 language: python
+
+before_script:
+  - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+  - curl https://cli-assets.heroku.com/install.sh | sh
+  - docker login --username=$HEROKU_LOGIN --password=$HEROKU_API_KEY registry.heroku.com
+
 script:
   - python -m pytest -v
+  - docker build -t dmbugua/auto-cell:v1 .
+  - docker tag dmbugua/auto-cell:v1 registry.heroku.com/$HEROKU_APP/web
+
+deploy:
+  provider: script
+  script:
+    docker push dmbugua/auto-cell;
+    docker push registry.heroku.com/$HEROKU_APP/web;
+    heruko container:release web --app $HEROKU_APP
+
+  on:
+    branch: deploy-via-heroku
