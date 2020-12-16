@@ -1,5 +1,3 @@
-import unittest
-
 from awe_pro import auto_cell
 
 def test_get_programming_language():
