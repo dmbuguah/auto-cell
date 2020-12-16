@@ -19,7 +19,7 @@ deploy:
   script:
     docker push dmbugua/auto-cell:v1;
     docker push registry.heroku.com/$HEROKU_APP/web;
-    heruko container:release web --app $HEROKU_APP
+    heroku container:release web --app $HEROKU_APP
 
   on:
     branch: deploy-via-heroku
