@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def get_favorite_programming_language():
-    question = 'Which is your favorite random programming language? '
+    question = 'Which was your first programming language? '
     page = '<html><body><h1>'
     page += question
     page += auto_cell.get_programming_language()

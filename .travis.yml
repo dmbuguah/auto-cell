@@ -11,15 +11,15 @@ before_script:
 
 script:
   - python -m pytest -v
-  - docker build -t dmbugua/auto-cell:v2 .
-  - docker tag dmbugua/auto-cell:v2 registry.heroku.com/$HEROKU_APP/web
+  - docker build -t dmbugua/auto-cell:v3 .
+  - docker tag dmbugua/auto-cell:v3 registry.heroku.com/$HEROKU_APP/web
 
 deploy:
-  provider: script
-  script:
-    docker push dmbugua/auto-cell:v2;
-    docker push registry.heroku.com/$HEROKU_APP/web;
-    heroku container:release web --app $HEROKU_APP
+  - provider: script
+    script:
+      docker push dmbugua/auto-cell:v3;
+      docker push registry.heroku.com/$HEROKU_APP/web;
+      heroku container:release web --app $HEROKU_APP
 
-  on:
-    branch: deploy-via-heroku
+    on:
+      branch: deploy-via-heroku
